@@ -7,7 +7,7 @@ Gem::Specification.new do |spec|
   spec.license = 'MIT'
   spec.authors = ['Ismael Medeiros']
   spec.email = %w{ismaelm@lacunasoftware.com}
-  # spec.homepage = 'http://docs.lacunasoftware.com/en-us/articles/pki-express',
+  spec.homepage = 'http://docs.lacunasoftware.com/en-us/articles/pki-express'
   spec.summary = 'Gem for using PKI Express on Ruby'
   spec.description = 'Classes to use Lacuna Software\'s PKI Express'
   spec.files = `git ls-files -z`.split("\x0")
@@ -16,10 +16,10 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
 
   spec.metadata = {
-      # 'bug_tracker_uri'   => 'https://github.com/LacunaSoftware/PkiExpressRuby/issues',
-      # 'changelog_uri'     => 'https://github.com/LacunaSoftware/PkiExpressRuby/blob/master/CHANGELOG.md',
-      # 'documentation_uri' => 'http://docs.lacunasoftware.com/en-us/articles/pki-express',
-      # 'source_code_uri'   => 'https://github.com/LacunaSoftware/PkiExpressRuby'
+      'bug_tracker_uri'   => 'https://github.com/LacunaSoftware/PkiExpressRuby/issues',
+      'changelog_uri'     => 'https://github.com/LacunaSoftware/PkiExpressRuby/blob/develop/CHANGELOG.md',
+      'documentation_uri' => 'http://docs.lacunasoftware.com/en-us/articles/pki-express',
+      'source_code_uri'   => 'https://github.com/LacunaSoftware/PkiExpressRuby'
   }
 
   spec.add_development_dependency 'bundler', '~> 1.7'
