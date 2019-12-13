@@ -2,10 +2,10 @@ module PkiExpress
 
   class Name
 
-    attr_accessor :state_name, :pseudonym, :surname, :given_name, :locality,
-                  :serial_number, :generation_qualifier, :email_address,
-                  :organization_unit, :initials, :title, :common_name, :country,
-                  :organization, :dn_qualifier
+    attr_accessor :country, :organization, :organization_unit, :dn_qualifier,
+                  :state_name, :common_name, :serial_number, :locality, :title,
+                  :surname, :given_name, :initials, :pseudonym,
+                  :generation_qualifier, :email_address
 
     def initialize(model)
       @country = nil
@@ -24,7 +24,8 @@ module PkiExpress
       @generation_qualifier = nil
       @email_address = nil
 
-      unless model.nil?
+
+      if model
         @country = model.fetch(:country)
         @organization = model.fetch(:organization)
         @organization_unit = model.fetch(:organizationUnit)

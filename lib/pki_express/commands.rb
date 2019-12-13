@@ -14,6 +14,8 @@ module PkiExpress
     START_AUTH = 'start-auth',
     COMPLETE_AUTH = 'complete-auth',
     STAMP_PDF = 'stamp-pdf',
-    READ_CERT = 'read-cert'
+    READ_CERT = 'read-cert',
+    GEN_KEY = 'gen-key',
+    CREATE_PFX = 'create-pfx'
   end
 end

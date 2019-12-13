@@ -6,7 +6,6 @@ module PkiExpress
       super(config)
     end
 
-    protected
     def verify_and_add_common_options(args)
 
       if StandardSignaturePolicies::require_timestamp(@signature_policy) and
@@ -50,6 +49,7 @@ module PkiExpress
         @version_manager.require_version('1.5')
       end
     end
+    protected :verify_and_add_common_options
   end
 
 end

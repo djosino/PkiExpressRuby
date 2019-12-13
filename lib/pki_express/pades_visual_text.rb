@@ -1,6 +1,7 @@
 module PkiExpress
   class PadesVisualText
-    attr_accessor :horizontal_align, :text, :include_signing_time, :font_size,
+    attr_reader :horizontal_align
+    attr_accessor :text, :include_signing_time, :font_size,
                   :container, :signing_time_format
 
     def initialize(text=nil, include_signing_time=nil, font_size=nil)
@@ -12,25 +13,23 @@ module PkiExpress
       @signing_time_format = nil
     end
 
+    def horizontal_align=(value)
+      unless PadesTextHorizontalAlign.contains?(value)
+        raise 'The provided "horizontal_align" is not valid. Try using PadesTextHorizontalAlign constants'
+      end
+
+      @horizontal_align = value
+    end
+
     def to_model
-      model = {
+      {
           'fontSize': @font_size,
           'text': @text,
           'includeSigningTime': @include_signing_time,
           'signingTimeFormat': @signing_time_format,
-          'container': @container&.to_model
+          'container': @container&.to_model,
+          'horizontalAlign': @horizontal_align
       }
-      if @horizontal_align
-        case @horizontal_align
-        when :left
-          model['horizontalAlign'] = 'Left'
-        when :right
-          model['horizontalAlign'] = 'Right'
-        else
-          raise 'The provided "horizontal_align" value is not valid'
-        end
-      end
-      model
     end
   end
 end

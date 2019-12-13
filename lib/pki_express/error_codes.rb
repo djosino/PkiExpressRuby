@@ -39,6 +39,7 @@ module PkiExpress
     KEY_SIZE_NOT_SUPPORTED = 36,
     BAD_KEY_FORMAT = 37,
     BAD_KEY = 38,
+    INVALID_TIMEOUT_VALUE = 39,
 
     COMMAND_NOT_FOUND = 127
   end

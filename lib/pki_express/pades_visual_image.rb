@@ -1,15 +1,32 @@
 module PkiExpress
   class PadesVisualImage
-    attr_accessor :opacity, :horizontal_align, :vertical_align, :content, :url,
+    attr_reader :horizontal_align, :vertical_align
+    attr_accessor :opacity, :content, :url,
                   :mime_type
 
     def initialize(image_content=nil, image_url = nil, image_mime_type=nil)
       @opacity = 100
-      @horizontal_align = :center
-      @vertical_align = :center
+      @horizontal_align = PadesHorizontalAlign::CENTER
+      @vertical_align = PadesVerticalAlign::CENTER
       @content = image_content
       @url = image_url
       @mime_type = image_mime_type
+    end
+
+    def horizontal_align=(value)
+      unless PadesHorizontalAlign.contains?(value)
+        raise 'The provided "horizontal_align" is not valid. Try using PadesHorizontalAlign constants'
+      end
+
+      @horizontal_align = value
+    end
+
+    def vertical_align=(value)
+      unless PadesVerticalAlign.contains?(value)
+        raise 'The provided "vertical_align" is not valid. Try using PadesVerticalAlign constants'
+      end
+
+      @vertical_align = value
     end
 
     def to_model
@@ -24,38 +41,11 @@ module PkiExpress
         raise 'The image content was not set, neither its URL'
       end
 
-      horizontal_align = nil
-      if @horizontal_align
-        case @horizontal_align
-        when :left
-          horizontal_align = 'Left'
-        when :center
-          horizontal_align = 'Center'
-        when :right
-          horizontal_align = 'Right'
-        else
-          raise 'Invalid horizontal align value. Available values: :left, :center, :right'
-        end
-      end
-
-      vertical_align = nil
-      if @vertical_align
-        case @vertical_align
-        when :top
-          vertical_align = 'Top'
-        when :center
-          vertical_align = 'Center'
-        when :bottom
-          vertical_align = 'Bottom'
-        else
-          raise 'Invalid vertical align value. Available values: :top, :center, :bottom'
-        end
-      end
       {
           resource: resource_model,
           opacity: @opacity,
-          horizontal_align: horizontal_align,
-          vertical_align: vertical_align,
+          horizontal_align: @horizontal_align,
+          vertical_align: @vertical_align,
       }
     end
   end

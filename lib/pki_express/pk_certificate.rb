@@ -2,9 +2,9 @@ module PkiExpress
 
   class PKCertificate
 
-    attr_accessor :pki_italy, :email_address, :serial_number, :issuer_name,
-                  :validity_start, :subject_name, :binary_thumbprint_sha256,
-                  :validity_end, :thumbprint, :pki_brazil, :issuer
+    attr_accessor :subject_name, :email_address, :issuer_name, :serial_number,
+                  :validity_start, :validity_end, :pki_brazil, :pki_italy,
+                  :issuer, :binary_thumbprint_sha256, :thumbprint
 
     def initialize(model)
       @subject_name = nil
@@ -17,41 +17,42 @@ module PkiExpress
       @pki_italy = nil
       @issuer = nil
       @binary_thumbprint_sha256 = nil
+      @thumbprint = nil
 
       unless model.nil?
         @email_address = model.fetch(:emailAddress)
         @serial_number = model.fetch(:serialNumber)
-        @thumbprint = model.fetch(:thumbprint)
         @validity_start = model.fetch(:validityStart)
         @validity_end = model.fetch(:validityEnd)
+        @thumbprint = model.fetch(:thumbprint)
 
         subject_name = model.fetch(:subjectName)
-        unless subject_name.nil?
+        if subject_name
           @subject_name = Name.new(subject_name)
         end
 
         issuer_name = model.fetch(:issuerName)
-        unless issuer_name.nil?
+        if issuer_name
           @issuer_name = Name.new(issuer_name)
         end
 
         pki_brazil = model.fetch(:pkiBrazil)
-        unless pki_brazil.nil?
+        if pki_brazil
           @pki_brazil = PkiBrazilCertificateFields.new(pki_brazil)
         end
 
         pki_italy = model.fetch(:pkiItaly)
-        unless pki_italy.nil?
+        if pki_italy
           @pki_italy = PkiItalyCertificateFields.new(pki_italy)
         end
 
         issuer = model.fetch(:issuer)
-        unless issuer.nil?
+        if issuer
           @issuer = PKCertificate.new(issuer)
         end
 
         binary_thumbprint_sha256 = model.fetch(:binaryThumbprintSHA256)
-        unless binary_thumbprint_sha256.nil?
+        if binary_thumbprint_sha256
           @binary_thumbprint_sha256 = Base64.decode64(binary_thumbprint_sha256)
         end
       end

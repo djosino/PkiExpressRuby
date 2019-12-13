@@ -31,10 +31,14 @@ module PkiExpress
     end
 
     def _set_nonce(nonce)
+      unless nonce
+        raise 'The provided "nonce" is not valid'
+      end
+
       begin
         b64 = Base64.encode64(nonce)
       rescue Error
-        raise 'The provided "nonce" is not valid.'
+        raise 'The provided "nonce" is not valid'
       end
 
       @nonce_base64 = b64
@@ -51,10 +55,14 @@ module PkiExpress
     private :_get_nonce_base64
 
     def nonce_base64=(nonce_base64)
+      unless nonce_base64
+        raise 'The provided "nonce_base64" is not valid'
+      end
+
       begin
         Base64.decode64(nonce_base64)
       rescue Error
-        raise 'The provided "nonce_base64" is not Base64-encoded.'
+        raise 'The provided "nonce_base64" is not Base64-encoded'
       end
 
       @nonce_base64 = nonce_base64
@@ -83,7 +91,7 @@ module PkiExpress
 
     def _set_certificate(content_raw)
       unless content_raw
-        raise 'The provided "nonce" is not valid.'
+        raise 'The provided "certificate" is not valid'
       end
 
       temp_file_path = self.create_temp_file
@@ -114,29 +122,43 @@ module PkiExpress
 
     def _set_certificate_base64(content_base64)
       unless content_base64
-        raise 'The provided "content_base64" is not valid.'
+        raise 'The provided "certificate_base64" is not valid'
       end
 
       begin
         content_raw = Base64.decode64(content_base64)
       rescue Error
-        raise 'The provided "content_base64" is not Base64-encoded.'
+        raise 'The provided "certificate_base64" is not Base64-encoded'
       end
 
       _set_certificate(content_raw)
     end
+    private :_set_certificate_base64
 
     def certificate_path
-      @certificate_path
+      _get_certificate_path
     end
 
+    def _get_certificate_path
+      @certificate_path
+    end
+    private :_get_certificate_path
+
     def certificate_path=(path)
+      _set_certificate_path(path)
+    end
+
+    def _set_certificate_path(path)
+      unless path
+        raise 'The provided "certificate_path" is not valid'
+      end
       if File.exists?(path)
-        raise 'The provided "content_path" does not exist.'
+        raise 'The provided "certificate_path" does not exist'
       end
 
       @certificate_path = path
     end
+    private :_set_certificate_path
 
     # endregion
 
@@ -160,10 +182,13 @@ module PkiExpress
     end
 
     def _set_signature(signature)
+      unless signature
+        raise 'The provided "signature" is not valid'
+      end
       begin
         b64 = Base64.encode64(signature)
       rescue Error
-        raise 'The provided "signature" is not valid.'
+        raise 'The provided "signature" is not valid'
       end
 
       @signature_base64 = b64
@@ -184,10 +209,13 @@ module PkiExpress
     end
 
     def _set_signature_base64(signature_base64)
+      unless signature_base64
+        raise 'The provided "signature_base64" is not valid'
+      end
       begin
         Base64.decode64(signature_base64)
       rescue Error
-        raise 'The provided "signature_base64" is not Base64-encoded.'
+        raise 'The provided "signature_base64" is not Base64-encoded'
       end
 
       @signature_base64 = signature_base64
@@ -237,7 +265,7 @@ module PkiExpress
 
       # The option "use external storage" is used to ignore the PKI Express's
       # nonce verification, to make a own nonce store and nonce verification.
-      if @use_external_storage
+      unless @use_external_storage
         args.append('--nonce-store')
         args.append(@config.transfer_data_folder)
       end

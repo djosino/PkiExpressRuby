@@ -6,7 +6,7 @@ module PkiExpress
       super(config)
       @pdf_to_sign_path = nil
       @vr_json_path = nil
-      @suppress_default_visual_representation = nil
+      @suppress_default_visual_representation = false
     end
 
     # region The "pdf_to_sign" accessors
@@ -215,6 +215,10 @@ module PkiExpress
 
       if @suppress_default_visual_representation
         args.append('--suppress-default-visual-rep')
+
+        # This option can only be used on versions greater than 1.13.1 of the
+        # PKI Express.
+        @version_manager.require_version('1.13.1')
       end
 
       # Invoke command.

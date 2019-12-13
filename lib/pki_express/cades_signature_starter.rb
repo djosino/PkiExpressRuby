@@ -8,7 +8,7 @@ module PkiExpress
       super(config)
       @file_to_sign_path = nil
       @data_file_path = nil
-      @encapsulated_content = nil
+      @encapsulated_content = true
     end
 
     # region The "file_to_sign" accessors
@@ -222,7 +222,7 @@ module PkiExpress
         args.append(@data_file_path)
       end
 
-      if @encapsulated_content
+      unless @encapsulated_content
         args.append('--detached')
       end
 

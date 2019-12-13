@@ -35,8 +35,8 @@ module PkiExpress
     end
 
     def cpf_formatted
-      if @cpf.nil?
-        return ''
+      unless @cpf
+        return nil
       end
       unless /^\d{11}$/.match(@cpf)
         return @cpf
@@ -45,8 +45,8 @@ module PkiExpress
     end
 
     def cnpj_formatted
-      if @cnpj.nil?
-        return ''
+      unless @cnpj
+        return nil
       end
       unless /^\d{14}$/.match(@cnpj)
         return @cnpj

@@ -3,9 +3,15 @@ module PkiExpress
     attr_accessor :digest_algorithm_name, :digest_algorithm_oid
 
     def initialize(model)
-      @nonce_base64 = model.fetch(:toSignData)
-      @digest_algorithm_name = model.fetch(:digestAlgorithmName)
-      @digest_algorithm_oid = model.fetch(:digestAlgorithmOid)
+      @nonce_base64 = nil
+      @digest_algorithm_name = nil
+      @digest_algorithm_oid = nil
+
+      if model
+        @nonce_base64 = model.fetch(:toSignData)
+        @digest_algorithm_name = model.fetch(:digestAlgorithmName)
+        @digest_algorithm_oid = model.fetch(:digestAlgorithmOid)
+      end
     end
 
     # region The "nonce" accessors
@@ -28,6 +34,10 @@ module PkiExpress
     end
 
     def _set_nonce(nonce)
+      unless nonce
+        raise 'The provided "nonce" is not valid'
+      end
+
       begin
         b64 = Base64.encode64(nonce)
       rescue Error
@@ -48,6 +58,10 @@ module PkiExpress
     private :_get_nonce_base64
 
     def nonce_base64=(nonce_base64)
+      unless nonce_base64
+        raise 'The provided "nonce_base64" is not valid'
+      end
+
       begin
         Base64.decode64(nonce_base64)
       rescue Error
