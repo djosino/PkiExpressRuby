@@ -10,6 +10,7 @@ module PkiExpress
       @pkcs12_path = nil
       @cert_thumb = nil
       @cert_password = nil
+      @use_machine = false
     end
 
     # region The "pkcs12" accessors
@@ -78,10 +79,19 @@ module PkiExpress
     private :_set_pkcs12_base64
 
     def pkcs12_path
-      @pkcs12_path
+      _get_pkcs12_path
     end
 
+    def _get_pkcs12_path
+      @pkcs12_path
+    end
+    private :_get_pkcs12_path
+
     def pkcs12_path=(path)
+      _set_pkcs12_path(path)
+    end
+
+    def _set_pkcs12_path(path)
       unless path
         raise 'The provided "content_path" is not valid'
       end
@@ -91,16 +101,42 @@ module PkiExpress
 
       @pkcs12_path = path
     end
+    private :_set_pkcs12_path
 
     # endregion
 
-    protected
     def verify_and_add_common_options(args)
       # Verify and add common option between signers and signature starters.
       super(args)
 
-      
+      if !@cert_thumb && !@pkcs12_path
+        raise 'No PKCS #12 file or certificate\'s thumbprint was provided'
+      end
+
+      if @cert_thumb
+        args.append('--thumbprint')
+        args.append(@cert_thumb)
+        @version_manager.require_version('1.3')
+      end
+
+      if @pkcs12_path
+        args.append('--pkcs12')
+        args.append(@pkcs12_path)
+        @version_manager.require_version('1.3')
+      end
+
+      if @cert_password
+        args.append('--password')
+        args.append(@cert_password)
+        @version_manager.require_version('1.3')
+      end
+
+      if @use_machine
+        args.append('--machine')
+        @version_manager.require_version('1.3')
+      end
     end
+    protected :verify_and_add_common_options
   end
 
 end

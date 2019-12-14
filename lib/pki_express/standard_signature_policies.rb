@@ -1,6 +1,6 @@
 module PkiExpress
 
-  class StandardSignaturePolicies
+  class StandardSignaturePolicies < Enum
     PKI_BRAZIL_CADES_ADR_BASICA = 'adrb'
     PKI_BRAZIL_CADES_ADR_BASICA_WITH_REVOCATION_VALUE = 'adrb-rv'
     PKI_BRAZIL_CADES_ADR_TEMPO = 'adrt'
@@ -23,6 +23,29 @@ module PkiExpress
     PKI_BRAZIL_XML_ADR_TEMPO = 'adrt'
     COD_WITH_SHA1 = 'cod-sha1'
     COD_WITH_SHA256 = 'cod-sha256'
+
+    VALUES = [
+        PKI_BRAZIL_CADES_ADR_BASICA,
+        PKI_BRAZIL_CADES_ADR_BASICA_WITH_REVOCATION_VALUE,
+        PKI_BRAZIL_CADES_ADR_TEMPO,
+        PKI_BRAZIL_CADES_ADR_COMPLETA,
+        CADES_BES,
+        CADES_BES_WITH_REVOCATION_VALUES,
+        CADES_T,
+        PADES_BASIC,
+        PADES_BASIC_WITH_LTV,
+        PADES_T,
+        PKI_BRAZIL_PADES_ADR_BASICA,
+        PKI_BRAZIL_PADES_ADR_BASICA_WITH_LTV,
+        PKI_BRAZIL_PADES_ADR_TEMPO,
+        NFE_PADRAO_NACIONAL,
+        XADES_BES,
+        XML_DSIG_BASIC,
+        PKI_BRAZIL_XML_ADR_BASIC,
+        PKI_BRAZIL_XML_ADR_TEMPO,
+        COD_WITH_SHA1,
+        COD_WITH_SHA256
+    ]
 
     def self.require_timestamp(policy)
       if policy.nil?

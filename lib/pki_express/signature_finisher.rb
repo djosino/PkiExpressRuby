@@ -1,6 +1,6 @@
 module PkiExpress
   class SignatureFinisher < PkiExpressOperator
-    attr_accessor :output_file_path, :transfer_file_id
+    attr_reader :transfer_file_id, :output_file_path
 
     def initialize(config=PkiExpressConfig.new)
       super(config)
@@ -250,6 +250,23 @@ module PkiExpress
     private :_set_signature_base64
 
     # endregion
+
+    def transfer_file_id=(value)
+      unless value
+        raise 'The provided "transfer_file_id" is not valid'
+      end
+      unless File.exist?(File.expand_path(value, @config.transfer_data_folder))
+        raise 'The provided "transfer_file_id" does not exist'
+      end
+      @transfer_file_id = value
+    end
+
+    def output_file_path=(value)
+      unless value
+        raise 'The provided "output_file_path" is not valid'
+      end
+      @output_file_path = value
+    end
 
     def complete(get_cert=true)
       unless @file_to_sign_path
