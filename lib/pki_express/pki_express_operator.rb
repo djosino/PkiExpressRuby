@@ -76,7 +76,7 @@ module PkiExpress
       # Add file references if added.
       unless @file_references.nil?
         @file_references.each do |key, value|
-          cmd_args.append('--file_reference')
+          cmd_args.append('--file-reference')
           cmd_args.append("#{key}=#{value}")
         end
       end
