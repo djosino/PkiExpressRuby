@@ -2,7 +2,7 @@ module PkiExpress
 
   class Signer < BaseSigner
 
-    attr_accessor :output_file_path, :cert_thumb, :cert_password
+    attr_accessor :output_file_path, :cert_thumb, :cert_password, :trust_service_session
 
     def initialize(config=PkiExpressConfig.new)
       super(config)
@@ -11,6 +11,7 @@ module PkiExpress
       @cert_thumb = nil
       @cert_password = nil
       @use_machine = false
+      @trust_service_session = nil
     end
 
     # region The "pkcs12" accessors
@@ -109,8 +110,8 @@ module PkiExpress
       # Verify and add common option between signers and signature starters.
       super(args)
 
-      if !@cert_thumb && !@pkcs12_path
-        raise 'No PKCS #12 file or certificate\'s thumbprint was provided'
+      if !@cert_thumb && !@pkcs12_path && !@trust_service_session
+        raise 'Neither the PKCS #12 file, the certificate\'s thumbprint nor the trust service session was provided'
       end
 
       if @cert_thumb
@@ -134,6 +135,14 @@ module PkiExpress
       if @use_machine
         args.append('--machine')
         @version_manager.require_version('1.3')
+      end
+
+      if @trust_service_session
+        args.append('--trust-service-session')
+        args.append(@trust_service_session)
+        # This option can only be used on versions greater than 1.18 of 
+        # the PKI Express.
+        @version_manager.require_version('1.18')
       end
     end
     protected :verify_and_add_common_options
