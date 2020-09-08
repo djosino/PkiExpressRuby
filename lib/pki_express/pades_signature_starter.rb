@@ -1,12 +1,15 @@
 module PkiExpress
   class PadesSignatureStarter < SignatureStarter
     attr_accessor :suppress_default_visual_representation
+    attr_accessor :custom_signature_field_name, :certification_level
 
     def initialize(config=PkiExpressConfig.new)
       super(config)
       @pdf_to_sign_path = nil
       @vr_json_path = nil
       @suppress_default_visual_representation = false
+      @custom_signature_field_name = nil
+      @certification_level = nil
     end
 
     # region The "pdf_to_sign" accessors
@@ -211,6 +214,22 @@ module PkiExpress
       if @vr_json_path
         args.append('--visual-rep')
         args.append(@vr_json_path)
+      end
+
+      if @custom_signature_field_name
+        args.append('--custom-signature-field-name')
+        args.append(@custom_signature_field_name)
+        # This option can only be used on versions greater than 1.15.0 of the
+        # PKI Express.
+        @version_manager.require_version('1.15')
+      end
+
+      if @certification_level
+        args.append('--certification-level')
+        args.append(@certification_level)
+        # This option can only be used on versions greater than 1.16.0 of the
+        # PKI Express.
+        @version_manager.require_version('1.16')
       end
 
       if @suppress_default_visual_representation
