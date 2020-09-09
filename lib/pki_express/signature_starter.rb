@@ -70,6 +70,7 @@ module PkiExpress
 
       _set_certificate(content_raw)
     end
+    private :_set_certificate_base64
 
     def certificate_path
       _get_certificate_path
@@ -99,7 +100,7 @@ module PkiExpress
     # endregion
 
     def self.get_result(response, transfer_file)
-      return {
+      {
           toSignHash: response[0],
           digestAlgorithmName: response[1],
           digestAlgorithmOid: response[2],

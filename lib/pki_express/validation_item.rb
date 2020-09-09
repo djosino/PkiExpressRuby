@@ -9,13 +9,13 @@ module PkiExpress
       @detail = nil
       @inner_validation_results = nil
 
-      unless model.nil?
+      if model
         @type = model.fetch(:type)
         @message = model.fetch(:message)
         @detail = model.fetch(:detail)
 
         inner_validation_results = model.fetch(:innerValidationResults)
-        unless inner_validation_results.nil?
+        if inner_validation_results
           @inner_validation_results = ValidationResults.new(inner_validation_results)
         end
       end
@@ -26,12 +26,13 @@ module PkiExpress
     end
 
     def to_s(indentation_level=0)
-      text = @message
-      unless @detail.nil?
+      tab = '\t' * indentation_level
+      text = tab + @message
+      if @detail
         text += " (#{@detail})"
       end
 
-      unless @inner_validation_results.nil?
+      if @inner_validation_results
         text += '\n'
         text += @inner_validation_results.to_s(indentation_level + 1)
       end

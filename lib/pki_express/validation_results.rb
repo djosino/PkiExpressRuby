@@ -8,19 +8,19 @@ module PkiExpress
       @warnings = []
       @passed_checks = []
 
-      unless model.nil?
+      if model
         errors = model.fetch(:errors)
-        unless errors.nil?
+        if errors
           @errors = convert_items(errors)
         end
 
         warnings = model.fetch(:warnings)
-        unless warnings.nil?
+        if warnings
           @warnings = convert_items(warnings)
         end
 
         passed_checks = model.fetch(:passedChecks)
-        unless passed_checks.nil?
+        if passed_checks
           @passed_checks = convert_items(passed_checks)
         end
       end
@@ -62,11 +62,11 @@ module PkiExpress
     end
 
     def has_errors
-      @errors.length > 0
+      @errors && @errors.length > 0
     end
 
     def has_warnings
-      @errors.length > 0
+      @warnings && @warnings.length > 0
     end
 
     def get_summary(indentation_level=0)

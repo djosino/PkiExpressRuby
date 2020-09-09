@@ -16,6 +16,10 @@ module PkiExpress
     STAMP_PDF = 'stamp-pdf',
     READ_CERT = 'read-cert',
     GEN_KEY = 'gen-key',
-    CREATE_PFX = 'create-pfx'
+    CREATE_PFX = 'create-pfx',
+    CHECK_SERVICE = 'check-service',
+    DISCOVER_SERVICES = 'discover-services',
+    PASSWORD_AUTHORIZE = 'pwd-auth',
+    COMPLETE_SERVICE_AUTH = 'complete-service-auth'
   end
 end
