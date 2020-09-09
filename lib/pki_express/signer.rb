@@ -60,19 +60,19 @@ module PkiExpress
     end
     private :_get_pkcs12_base64
 
-    def pkcs12_base64=(content_base64)
-      _set_pkcs12_base64(content_base64)
+    def pkcs12_base64=(pkcs12_base64)
+      _set_pkcs12_base64(pkcs12_base64)
     end
 
-    def _set_pkcs12_base64(content_base64)
-      unless content_base64
-        raise 'The provided "content_base64" is not valid'
+    def _set_pkcs12_base64(pkcs12_base64)
+      unless pkcs12_base64
+        raise 'The provided "pkcs12_base64" is not valid'
       end
 
       begin
-        content_raw = Base64.decode64(content_base64)
+        content_raw = Base64.decode64(pkcs12_base64)
       rescue Error
-        raise 'The provided "content_base64" is not Base64-encoded'
+        raise 'The provided "pkcs12_base64" is not Base64-encoded'
       end
 
       _set_pkcs12(content_raw)
@@ -88,19 +88,19 @@ module PkiExpress
     end
     private :_get_pkcs12_path
 
-    def pkcs12_path=(path)
-      _set_pkcs12_path(path)
+    def pkcs12_path=(pkcs12_path)
+      _set_pkcs12_path(pkcs12_path)
     end
 
-    def _set_pkcs12_path(path)
-      unless path
-        raise 'The provided "content_path" is not valid'
+    def _set_pkcs12_path(pkcs12_path)
+      unless pkcs12_path
+        raise 'The provided "pkcs12_path" is not valid'
       end
-      unless File.exists?(path)
-        raise 'The provided "content_path" does not exist'
+      unless File.exists?(pkcs12_path)
+        raise 'The provided "pkcs12_path" does not exist'
       end
 
-      @pkcs12_path = path
+      @pkcs12_path = pkcs12_path
     end
     private :_set_pkcs12_path
 
