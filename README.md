@@ -7,7 +7,7 @@ This library contains classes that encapsulate the calls to PKI Express.
 The recommended way to install **PKI Expresss lib** is through setting in your Gemfile:
 
 ````ruby
-gem 'pki_express', '~> 1.0.0'
+gem 'pki_express', '~> 2.0.0'
 ````
 
 And with installing via [Bundler](http://bundler.io/) on your project root folder:
