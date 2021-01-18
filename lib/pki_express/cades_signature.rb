@@ -52,10 +52,7 @@ module PkiExpress
 
       unless model.nil?
         @certified_date_reference = model.fetch(:certifiedDateReference)
-        signing_time =  model.fetch(:signingTime)
-        if signing_time
-            @signing_time = DateTime.iso8601(signing_time)
-        end
+        @signing_time =  model.fetch(:signingTime)
 
         message_digest =  model.fetch(:messageDigest)
         if message_digest
@@ -69,7 +66,7 @@ module PkiExpress
 
         certificate =  model.fetch(:certificate)
         if certificate
-          @certificate = PKCertificate(certificate)
+          @certificate = PKCertificate.new(certificate)
         end
 
         signature_policy =  model.fetch(:signaturePolicy)

@@ -17,59 +17,64 @@ module PkiExpress
       @xml_uri = xml_uri
     end
 
-    def md5
+    def self.md5
       unless @md5
         @md5 = new(
-          DigestAlgorithms.MD5,
+          DigestAlgorithms::MD5,
           Oids::MD5,
           16,
           'md5',
           'http://www.w3.org/2001/04/xmldsig-more#md5')
       end
+      @md5
     end
 
-    def sha1
+    def self.sha1
       unless @sha1
         @sha1 = new(
-          DigestAlgorithms.SHA1,
+          DigestAlgorithms::SHA1,
           Oids::SHA1,
           20,
           'sha1',
           'http://www.w3.org/2000/09/xmldsig#sha1')
       end
+      @sha1
     end
 
-    def sha256
+    def self.sha256
       unless @sha256
         @sha256 = new(
-          DigestAlgorithms.SHA256,
+          DigestAlgorithms::SHA256,
           Oids::SHA256,
           32,
           'sha256',
           'http://www.w3.org/2001/04/xmlenc#sha256')
       end
+      @sha256
     end
 
-    def sha384
+    def self.sha384
       unless @sha384
         @sha384 = new(
-          DigestAlgorithms.SHA384,
+          DigestAlgorithms::SHA384,
           Oids::SHA384,
           48,
           'sha384',
           'http://www.w3.org/2001/04/xmldsig-more#sha384')
       end
+      @sha384
     end
 
-    def sha512
+    def self.sha512
       unless @sha512
         @sha512 = new(
-          DigestAlgorithms.SHA512,
+          DigestAlgorithms::SHA512,
           Oids::SHA512,
           64,
           'sha512',
           'http://www.w3.org/2001/04/xmlenc#sha512')
       end
+      @sha512
     end
 
     def self.get_algorithms
@@ -79,33 +84,33 @@ module PkiExpress
 
     class << DigestAlgorithm
       def get_instance_by_name(name)
-        get_algorithms
-        unless @algorithms.select{|v| v.name == name}.empty?
-          return @algorithms.select{|v| v.name == name}.first
+        algorithms = get_algorithms
+        unless algorithms.select{|v| v.name == name}.empty?
+          return algorithms.select{|v| v.name == name}.first
         end
         raise 'Unrecognized digest algorithm name: ' + name
       end
 
       def get_instance_by_oid(oid)
-        get_algorithms
-        unless @algorithms.select{|v| v.oid == oid}.empty?
-          return @algorithms.select{|v| v.oid == oid}.first
+        algorithms = get_algorithms
+        unless algorithms.select{|v| v.oid == oid}.empty?
+          return algorithms.select{|v| v.oid == oid}.first
         end
         raise 'Unrecognized digest algorithm oid: ' + oid
       end
 
       def get_instance_by_xml_uri(xml_uri)
-        get_algorithms
-        unless @algorithms.select{|v| v.xml_uri == xml_uri}.empty?
-          return @algorithms.select{|v| v.xml_uri == xml_uri}.first
+        algorithms = get_algorithms
+        unless algorithms.select{|v| v.xml_uri == xml_uri}.empty?
+          return algorithms.select{|v| v.xml_uri == xml_uri}.first
         end
         raise 'Unrecognized digest algorithm XML URI: ' + xml_uri
       end
 
       def get_instance_by_api_model(api_model)
-        get_algorithms
-        unless @algorithms.select{|v| v.api_model.downcase == api_model.downcase}.empty?
-          return @algorithms.select{|v| v.api_model.downcase == api_model.downcase}.first
+        algorithms = get_algorithms
+        unless algorithms.select{|v| v.api_model.downcase == api_model.downcase}.empty?
+          return algorithms.select{|v| v.api_model.downcase == api_model.downcase}.first
         end
         raise 'Unrecognized digest algorithm: ' + api_model
       end

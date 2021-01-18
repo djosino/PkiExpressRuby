@@ -15,7 +15,7 @@ module PkiExpress
         @value = Base64.decode64(value).bytes
         
         algorithm_identifier = model.fetch(:algorithmIdentifier)
-        unless algorithm_identifier.nil?
+        if algorithm_identifier.nil?
           algorithm = model.fetch(:algorithm)
           unless algorithm.nil?
             @algorithm = DigestAlgorithm.get_instance_by_api_model(algorithm)
