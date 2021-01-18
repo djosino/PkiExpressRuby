@@ -54,14 +54,12 @@ module PkiExpress
 
     def self.algorithms
       return [md5_with_rsa, sha1_with_rsa, sha256_with_rsa, sha384_with_rsa, sha512_with_rsa]
-      end
     end
 
     def self.safe_algorithms
       return [sha1_with_rsa, sha256_with_rsa, sha384_with_rsa, sha512_with_rsa]
-      end
     end
-    private_class_method :algorithms, :safe_algorithms :new
+    private_class_method :algorithms, :safe_algorithms, :new
 
     class << SignatureAlgorithm
       def get_instance_by_name(name)
@@ -104,16 +102,16 @@ module PkiExpress
       when DigestAlgorithm.md5
         xml_uri = xml_uri = 'http://www.w3.org/2001/04/xmldsig-more#rsa-md5'
         oid = Oids::MD5_WITH_RSA
-      when digest_algorithm is DigestAlgorithm.sha1
+      when DigestAlgorithm.sha1
         xml_uri = 'http://www.w3.org/2000/09/xmldsig#rsa-sha1'
         oid = Oids::SHA1_WITH_RSA
-      when digest_algorithm is DigestAlgorithm.sha256
+      when DigestAlgorithm.sha256
         xml_uri = 'http://www.w3.org/2001/04/xmldsig-more#rsa-sha256'
         oid = Oids::SHA256_WITH_RSA
-      when digest_algorithm is DigestAlgorithm.sha384
+      when DigestAlgorithm.sha384
         xml_uri = 'http://www.w3.org/2001/04/xmldsig-more#rsa-sha384'
         oid = Oids::SHA384_WITH_RSA
-      when digest_algorithm is DigestAlgorithm.sha512
+      when DigestAlgorithm.sha512
         xml_uri = 'http://www.w3.org/2001/04/xmldsig-more#rsa-sha512'
         oid = Oids::SHA512_WITH_RSA
       else
