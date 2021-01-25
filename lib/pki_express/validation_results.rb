@@ -31,7 +31,7 @@ module PkiExpress
     end
 
     def to_s(indentation_level = 0)
-      item_indent = '\t' * indentation_level
+      item_indent = "\t" * indentation_level
       text = ''
 
       text += get_summary(indentation_level)
@@ -70,7 +70,7 @@ module PkiExpress
     end
 
     def get_summary(indentation_level=0)
-      item_indent = '\t' * indentation_level
+      item_indent = "\t" * indentation_level
       text = "#{item_indent}Validation Results: "
 
       if checks_performed == 0
@@ -102,13 +102,13 @@ module PkiExpress
     def join_items(items, indentation_level=0)
       text = ''
       is_first = true
-      item_indent = '\t' * indentation_level
+      item_indent = "\t" * indentation_level
 
       items.each do |i|
         if is_first
           is_first = false
         else
-          text += '\n'
+          text += "\n"
         end
         text += item_indent + '- '
         text += i.to_s(indentation_level)
