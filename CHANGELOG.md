@@ -1,3 +1,6 @@
+## 1.2.0 (2021-01-25)
+* Adds PAdES Explorer
+
 ## 1.1.0 (2020-09-09)
 * Adds PAdES Signer
 * Adds support for Trust Services Management
