@@ -5,7 +5,7 @@ module PkiExpress
 
   class PkiExpressOperator
     attr_accessor :offline, :trust_lacuna_test_root, :signature_policy,
-                  :timestamp_authority
+                  :timestamp_authority, :culture, :time_zone
 
     def initialize(config = PkiExpressConfig.new)
       @temp_files = []
@@ -18,6 +18,8 @@ module PkiExpress
       @trust_lacuna_test_root = false
       @signature_policy = nil
       @timestamp_authority = nil
+      @culture = nil
+      @time_zone = nil
 
       ObjectSpace.define_finalizer(self, self.class.method(:finalize))
     end
@@ -105,6 +107,22 @@ module PkiExpress
       # Add base64 output option
       unless plain_output
         cmd_args.append('--base64')
+      end
+
+      unless @culture.nil?
+        cmd_args.append('--culture')
+        cmd_args.append(@culture)
+        # This option can only be used on versions 
+        # greater than 1.10 of the PKI Express.
+        @version_manager.require_version('1.10')
+      end
+
+      unless @time_zone.nil?
+        cmd_args.append('--timezone')
+        cmd_args.append(@time_zone)
+        # This option can only be used on versions 
+        # greater than 1.10 of the PKI Express.
+        @version_manager.require_version('1.10')
       end
 
       # Verify the necessity of using the --min-version flag.
