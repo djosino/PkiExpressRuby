@@ -5,7 +5,7 @@ module PkiExpress
     @@single_temp_folder = nil
 
     def initialize(pki_express_home = nil, temp_folder = nil, transfer_data_folder = nil)
-      if not temp_folder.nil? and Pathname.exist?(temp_folder)
+      if not temp_folder.nil? and Pathname.new(temp_folder).exist?
         @temp_folder = temp_folder
       else
         if @@single_temp_folder.nil?
@@ -14,7 +14,7 @@ module PkiExpress
         @temp_folder = @@single_temp_folder
       end
 
-      if not transfer_data_folder.nil? and Pathname.exist?(transfer_data_folder)
+      if not transfer_data_folder.nil? and Pathname.new(transfer_data_folder).exist?
         @transfer_data_folder = transfer_data_folder
       else
         @transfer_data_folder = @temp_folder
