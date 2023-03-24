@@ -22,6 +22,6 @@ Gem::Specification.new do |spec|
       'source_code_uri'   => 'https://github.com/LacunaSoftware/PkiExpressRuby'
   }
 
-  spec.add_development_dependency 'bundler', '~> 1.7'
+  spec.add_development_dependency 'bundler', '~> 2.3.26'
   spec.add_development_dependency 'rake', '~> 13'
 end
