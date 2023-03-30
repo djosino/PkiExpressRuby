@@ -1,5 +1,8 @@
 require 'shellwords'
+require 'securerandom'
 require 'open3'
+require 'tmpdir'
+require 'tempfile'
 
 module PkiExpress
 
@@ -21,11 +24,14 @@ module PkiExpress
       @culture = nil
       @time_zone = nil
 
-      ObjectSpace.define_finalizer(self, self.class.method(:finalize))
+      @id = SecureRandom.uuid
+      ObjectSpace.define_finalizer(@id, proc {
+        self.class.finalize(@temp_files)
+      })
     end
 
-    def self.finalize
-      @temp_files.each do |file|
+    def self.finalize(temp_files)
+      temp_files.each do |file|
         File.delete(file) if File.exist?(file)
       end
     end
