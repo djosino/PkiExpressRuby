@@ -4,5 +4,6 @@ source 'https://rubygems.org'
 gemspec
 
 group :development, :test do
-    gem 'rspec'
+    gem 'rspec', '~> 3.12'
+    gem 'faker', '~> 3.1', '>= 3.1.1'
 end
