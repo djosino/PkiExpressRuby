@@ -1,6 +1,6 @@
 PKI Express for Ruby
 ============================
-[![Gem Version](https://badge.fury.io/rb/rest_pki.svg)](https://badge.fury.io/rb/rest_pki)
+[![Gem Version](https://badge.fury.io/rb/pki_express.svg)](https://badge.fury.io/rb/pki_express)
 
 This library contains classes that encapsulate the calls to PKI Express.
 
