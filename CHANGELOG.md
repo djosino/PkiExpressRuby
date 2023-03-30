@@ -1,3 +1,7 @@
+## 1.3.1 (2023-03-30)
+* Fix pki express operator finalizer
+* Improve pathname call with exists
+
 ## 1.3.0 (2021-08-04)
 * Adds culture and time zone attributes to PkiExpressOperator
 
