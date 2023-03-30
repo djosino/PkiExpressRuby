@@ -1,3 +1,6 @@
+## 1.3.2 (2023-03-30)
+* Improve valdiation of PkiExpressConfig's contructor parameters
+
 ## 1.3.1 (2023-03-30)
 * Fix pki express operator finalizer
 * Improve pathname call with exists
