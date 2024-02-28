@@ -53,10 +53,11 @@ module PkiExpress
         # Parse output and return model.
         model = JSON.parse(Base64.decode64(result[0]))
         PKCertificate.new(model['signer'])
-      else
-        @version_manager.require_version('1.3')
+      else        
         # This operation can only be used on
         # version greater than 1.3 of the PKI Express.
+        @version_manager.require_version('1.3')
+
         invoke_plain(Commands::SIGN_CADES, args)
       end
     end
