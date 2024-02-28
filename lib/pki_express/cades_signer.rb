@@ -1,29 +1,28 @@
 # frozen_string_literal: true
 
-require_relative 'commands'
-
 module PkiExpress
   class CadesSigner < Signer
     attr_accessor :commitment_type, :encapsulated_content
+    attr_reader :pdf_to_sign_path
 
     def initialize(config = PkiExpressConfig.new)
       super(config)
-      @file_to_sign_path = nil
+      @pdf_to_sign_path = nil
       @encapsulated_content = true
       @commitment_type = nil
     end
 
-    def set_file_to_sign_from_path(path)
+    def pdf_to_sign_path=(path)
       raise 'The provided file to be signed was not found' unless File.exist?(path)
 
-      @file_to_sign_path = path
+      @pdf_to_sign_path = path
     end
 
     def sign(get_cert = false)
-      raise 'The file to be signed was not set' unless @file_to_sign_path
+      raise 'The file to be signed was not set' unless @pdf_to_sign_path
       raise 'The output destination was not set' unless @output_file_path
 
-      args = [@file_to_sign_path]
+      args = [@pdf_to_sign_path]
 
       # Logic to overwrite original file or use the output file
       if @overwrite_original_file
@@ -42,8 +41,6 @@ module PkiExpress
       if @commitment_type
         args.append('--commitment-type', @commitment_type)
       end
-
-      puts ([Commands::SIGN_PADES] + args).join(' ')
 
       if get_cert
         # This operation can only be used on
