@@ -3,13 +3,14 @@
 module PkiExpress
   class CadesSigner < Signer
     attr_accessor :commitment_type, :encapsulated_content
-    attr_reader :pdf_to_sign_path
+    attr_accessor :overwrite_original_file, :output_file_path
 
     def initialize(config = PkiExpressConfig.new)
       super(config)
-      @pdf_to_sign_path = nil
+      @version_manager = VersionManager.new
       @encapsulated_content = true
-      @commitment_type = nil
+      @commitment_type = false
+      @overwrite_original_file = false
     end
 
     def pdf_to_sign_path=(path)
@@ -20,7 +21,9 @@ module PkiExpress
 
     def sign(get_cert = false)
       raise 'The file to be signed was not set' unless @pdf_to_sign_path
-      raise 'The output destination was not set' unless @output_file_path
+      if @overwrite_original_file == false && @output_file_path.nil?
+        raise 'The output destination was not set'
+      end
 
       args = [@pdf_to_sign_path]
 
@@ -46,14 +49,13 @@ module PkiExpress
         # This operation can only be used on
         # version greater than 1.8 of the PKI Express.
         @version_manager.require_version('1.8')
-
         # Invoke command.
         result = invoke(Commands::SIGN_CADES, args)
 
         # Parse output and return model.
         model = JSON.parse(Base64.decode64(result[0]))
         PKCertificate.new(model['signer'])
-      else        
+      else
         # This operation can only be used on
         # version greater than 1.3 of the PKI Express.
         @version_manager.require_version('1.3')
