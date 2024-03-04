@@ -1,3 +1,6 @@
+require 'json'
+require 'base64'
+
 require_relative '../lib/pki_express'
 
 RSpec.configure do |config|
